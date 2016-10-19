@@ -1,4 +1,5 @@
 .env
 log/
+tmp/
 vendor/
 

@@ -2,8 +2,9 @@
 
 use system\libs\Logger as Logger;
 
-$_appFolder     = "/app";
-$_systemFolder  = "/system";
+$_appFolder         = "/app";
+$_systemFolder      = "/system";
+$_templatesFolder   = "/templates";
 
 $_CONF = cc_getConfig();
 
@@ -29,6 +30,8 @@ switch (ENVIRONMENT) {
 
 define("APP_ROOT", isset($_CONF['APP_ROOT']) ? $_CONF['APP_ROOT'] : $_SERVER['DOCUMENT_ROOT']);
 define("APP_PATH", APP_ROOT . $_appFolder);
+
+define("APP_URL", isset($_CONF['APP_URL']) ? $_CONF['APP_URL'] : $_SERVER['SERVER_NAME']);
 
 define("APP_NAME", isset($_CONF['APP_NAME']) ? $_CONF['APP_NAME'] : "CodeCompass App");
 
@@ -80,7 +83,7 @@ function cc_getConfig()
     if (is_readable($dir . "/.env")) {
         $file = fopen($dir . "/.env", "r");
         while($line = fgets($file)) {
-            if (!preg_match('/^.+=.+$/', $line) || preg_match('/^[;#].*/', $line)) {
+            if (!preg_match('/^.+=.*$/', $line) || preg_match('/^[;#].*/', $line)) {
                 continue;
             }
             list($k, $v) = explode('=', trim($line));

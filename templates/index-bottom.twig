@@ -1,0 +1,16 @@
+{% extends 'bottom.twig' %}
+
+{% block bottomscripts %}
+$(document).ready(function() {
+    $( '.bq_click' ).click(function() {
+        var $btnId = $(this).attr( 'id' );
+        $( 'input#btn_pressed' ).val( $btnId );
+        var r = confirm("You sure?");
+        if (r == true) {
+            $ ( 'form#queuesForm' ).submit();
+        }
+    });
+
+    setTimeout(function() { location.reload() },10000);
+});
+{% endblock %}

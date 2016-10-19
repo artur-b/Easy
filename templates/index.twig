@@ -1,0 +1,73 @@
+{% include 'header.twig' %}
+    {% include 'navbar.twig' %}
+
+    <div class="container-fluid content">
+
+    <div class="container">
+        <h3 class="custom">Consumers</h3>
+
+        <form id="queuesForm" method="POST" action="process_control.php">
+            <input id="btn_pressed" name="btn_pressed" type="hidden" value="default">
+
+        <div class="table-wrapper">
+        <table style="width: 100%;">
+            <tr>
+                <th style="width: 52px"></th>
+                <th>name</th>
+                <th>queue</th>
+                <th>pid</th>
+                <th></th>
+                <th style="width: 30%">message</th>
+                <th></th>
+            </tr>
+            {% for k,q in queues %}
+                <tr class="tsubh">
+                    <td colspan="6">{{ k }}</td>
+                    <td style="text-align: right;">
+                        <button id="bq_{{ k }}_start" class="btn btn-xs btn-success bq_click"><i class="fa fa-play"></i></button>
+                        <button id="bq_{{ k }}_reload" class="btn btn-xs btn-warning bq_click"><i class="fa fa-refresh"></i></button>
+                    </td>
+                </tr>
+                {% if q|length == 0 %}
+                <tr>
+                    <td><span><i class="fa fa-minus" style="color:#B6B6B6"></span></td>
+                    <td colspan="6"></td>
+                </tr>
+                {% else %}
+                    {% for qq in q %}
+                    <tr>
+                        <td><span>
+                        {% if breakpoint|date('U') < qq.modified|date('U')  %}
+                            <i class="fa fa-cog" style="color:green">
+                        {% else %}
+                            <i class="fa fa-pause" style="color:#B6B6B6">
+                        {% endif %}
+                        </span></td>
+                        <td>{{ qq.name }}</td>
+                        <td>{{ qq.queue }}</td>
+                        <td>{{ qq.pid }}</td>
+                        <td>{{ qq.modified }}</td>
+                        <td>{{ qq.message }}</td>
+                        <td>
+                            <button id="bq_{{ qq.pid }}_kill" class="btn btn-xs btn-danger bq_click"><i class="fa fa-remove"></i></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+
+        </form>
+
+        <div style="height: 25px" class="interim">
+        </div>
+
+        <div style="height: 25px">
+        </div>
+    </div><!-- /.container   -->
+
+    </div>
+  {% include 'console.twig' with {'debug': debug, 'status_message': status_message} %}
+{% include 'index-bottom.twig' %}
