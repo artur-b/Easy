@@ -1,8 +1,10 @@
 <?php
 
 use system\libs\Router as Router;
-//use \libs\internal\sessions as Sessions;
+use system\libs\Session as Session;
 use system\libs\Logger as Logger;
+
+use app\models\Auth as Auth;
 
 class App 
 {
@@ -19,6 +21,8 @@ class App
     public static $PAGE     = [];
     public static $COOKIES  = [];
     public static $TWIG     = null;
+    
+    public static $AUTH     = null;
         
     private static $PUBLIC_API = [
     ]; 
@@ -26,32 +30,13 @@ class App
     public static function start()
     {
         self::getRoute();
+        self::getSession();
         self::setTwig();
-//        self::checkOffline();   // show maintenance screen
-        //...                
-        //echo "Calling " . "\\app\\controllers\\" . self::$PAGE["controller"] . "::" . self::$PAGE["method"] . "<hr>";
+//        self::checkOffline();   // show maintenance screen                
+        self::addDebug("Calling " . "\\app\\controllers\\" . self::$PAGE["controller"] . "::" . self::$PAGE["method"]);
         call_user_func_array("\\app\\controllers\\" . self::$PAGE["controller"] . "::" . self::$PAGE["method"], self::$PAGE["parameters"]);
     }
     
-    public static function setTwig()
-    {
-        $loader = new \Twig_Loader_Filesystem(APP_ROOT . "/templates");
-        self::$TWIG = new \Twig_Environment($loader, [
-            'cache'         => APP_ROOT . "/tmp/cache",
-            'debug'         => ENVIRONMENT == 'devel' ? true : false,
-            'auto_reload'   => true,
-        ]);
-        self::$TWIG->addGlobal('APP_NAME', APP_NAME);
-        self::$TWIG->addGlobal('APP_URL', APP_URL);        
-    }
-
-    public static function Load() 
-    {
-        self::getSession();
-        self::setAdditionalData();        
-        self::assignVariables();
-    }
-
     public static function getRoute() 
     {
         $_route = Router::parse();
@@ -104,28 +89,39 @@ class App
         }
     }
 
-    public static function getSession() {
-        if(self::$PAGE["controller"] == "remoteCurl_v2") return;
+    public static function getSession() 
+    {
+        Session::setAttr(['sessionName' => APP_NAME]);
+        Session::start();
 
-        if(in_array(self::$PAGE['controller'].'/'.self::$PAGE['method'], self::$PUBLICAPI)) return;
-
-        Sessions::setSettings(array("sessionName" => "kupnakreske"));
-        Sessions::sessionStart();
-
-        $customerId = ModelAuth::isLoggedCustomer();
-
-        if($merchantId && $customerId) {
-            ModelAuth::logoutCustomer();
-            $customerId = false;
-        }
-
-        if($merchantId) self::$MERCHANT = ModelMerchants::getMerchantById($merchantId);
-        if($customerId) self::$CUSTOMER = ModelCustomers::getCustomerById($customerId);
+        //do not check Session/AUTH if public api
+        if (in_array(self::$PAGE['controller'] . '/' . self::$PAGE['method'], self::$PUBLIC_API)) return;        
         
-        if (!$customerId && !$merchantId && self::$PAGE["controller"] != "login") {
-            self::$PAGE["controller"] = self::$DEFAULTS["controller"];
-            self::$PAGE["method"]     = self::$DEFAULTS["method"];
-            self::$PAGE["parameters"]     = array();            
+        $authId = Auth::getId();
+        if (!empty($authId)) self::$AUTH = Auth::getUser($authId);
+        
+        if (empty($authId) && self::$PAGE['controller'] != "AuthController") {
+            self::$PAGE['controller'] = self::$DEFAULTS['controller'];
+            self::$PAGE['method']     = self::$DEFAULTS['method'];
+            self::$PAGE['parameters'] = [];            
+        }
+    }
+
+    public static function setTwig()
+    {
+        $loader = new \Twig_Loader_Filesystem(APP_ROOT . "/templates");
+        self::$TWIG = new \Twig_Environment($loader, [
+            'cache'         => APP_ROOT . "/tmp/cache",
+            'debug'         => ENVIRONMENT == 'devel' ? true : false,
+            'auto_reload'   => true,
+        ]);
+        self::$TWIG->addGlobal('APP_NAME', APP_NAME);
+        self::$TWIG->addGlobal('APP_URL', APP_URL);
+        
+        self::$TWIG->addGlobal('session', $_SESSION);
+        
+        if (ENVIRONMENT == "devel") {
+            self::$TWIG->addGlobal('DEBUG', 1);
         }
     }
 
@@ -137,15 +133,10 @@ class App
         if(is_readable(APP_PATH . "/public/css/page/" . self::$PAGE["controller"] . ".css")) self::$PAGE["css"] = APP_URL . "/public/css/page/" . self::$PAGE["controller"] . ".css";
     }
 
-    public static function assignVariables() {
-        self::$SMARTY->assign("PAGE", self::$PAGE);
-        self::$SMARTY->assign("COOKIES", self::$COOKIES);
-        self::$SMARTY->assign("CUSTOMER", self::$CUSTOMER);
-    }
-
     public static function go($controller = false, $method = false, $parameters = false)
     {        
         $url = APP_URL;        
+        
         if($controller && !empty($controller)) {
             $url .= "/" . $controller;
             if($method) {
@@ -157,5 +148,10 @@ class App
         }
         header("Location: " . $url);
         exit;
+    }
+    
+    private static function addDebug($msg)
+    {
+        self::$TWIG->addGlobal("DEBUG_MSG", $msg);
     }
 }

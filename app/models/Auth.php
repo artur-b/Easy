@@ -2,24 +2,23 @@
 
 namespace app\models;
 
-//use \system\libs\Db as DB;
-use \system\libs\Logger as Logger;
+use system\libs\Logger as Logger;
+
+use app\models\Users as Users;
 
 class Auth 
 {
+    private static $_AUTH = null;
     
     public static function authUser($login = false, $password = false) 
     {
-        return false;
-    }
-    /*
-        $customer = ModelCustomers::getCustomerByEmail($login);
+        $user = Users::getByEmail($login);
         
-        if ($customer['Verified'] < -1) {   // user blocked
-            return false;
-        }
-
-        if($customer) {
+        if($user) {
+            if ($user['Verified'] < -1) {   // user blocked
+                return false;
+            }
+/*
             if($customer["FirstLogin"] == 1) {                
                 Logger::debug("First login detected");
                 if(!self::checkPassword($password, $customer["Password"])) {
@@ -34,15 +33,41 @@ class Auth
                 header("Location: " . APP_URL . "/login/passRecoveryLink/" . $hash);
                 return false;
             }
-            if(self::checkPassword($password, $customer["Password"])) {
-                $_SESSION["customerId"] = $customer["ID"];
+ */
+            if(self::checkPassword($password, $user['Password'])) {
+                $_SESSION['authId'] = $user['ID'];
                 return true;
             }
-            else return false;
+        }
+        
+        return false;
+    }
+    
+    public static function getId() {
+        if(isset($_SESSION['authId']) && $_SESSION['authId'] > 0) return $_SESSION['authId'];
+        else return null;
+    }
+    
+    public static function getUser($authId = null)
+    {
+        return Users::getById($authId);
+    }
+
+    public static function logout() {
+        $_SESSION['authId'] = 0;
+    }
+
+    public static function checkPassword($password = false, $hash = false) {
+        if(!$password || !$hash) return false;
+        echo "$password :: $hash<hr>";
+        if(crypt($password, $hash) == $hash) {
+            return true;
         }
         else return false;
     }
 
+    /*
+     
     public static function createPasswordHash($password = false) {
         if(!$password) return false;
 
@@ -51,28 +76,6 @@ class Auth
         $salt = sprintf("$2a$%02d$", $cost) . $salt;
 
         return crypt($password, $salt);
-    }
-
-    public static function isLoggedCustomer() {
-        if(isset($_SESSION["customerId"]) && $_SESSION["customerId"] > 0) return $_SESSION["customerId"];
-        else return false;
-    }
-
-    public static function logout() {
-        $_SESSION["customerId"] = 0;
-        $_SESSION["merchantId"] = 0;
-    }
-
-    public static function logoutCustomer() {
-        $_SESSION["customerId"] = 0;
-    }
-
-    public static function checkPassword($password = false, $hash = false) {
-        if(!$password || !$hash) return false;
-        if(crypt($password, $hash) == $hash) {
-            return true;
-        }
-        else return false;
     }
 */
 }

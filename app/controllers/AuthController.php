@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use \app\models\Auth as ModelAuth;
+use \app\models\Auth as Auth;
 
 class AuthController
 {
@@ -20,19 +20,23 @@ class AuthController
     public static function signin()
     {
         $_POST['login'] = strtolower(trim($_POST['login']));
-        $_POST['password'] = trim($_POST['login']);
+        $_POST['password'] = trim($_POST['password']);
 
-        if(ModelAuth::authUser($_POST['login'], $_POST['password'])) {            
+        if(Auth::authUser($_POST['login'], $_POST['password'])) {            
             \App::go("user/dashboard");
         }
         else {            
             if(isset($_POST['email'])) $output['email'] = $_POST['email'];
-
             $output['error'] = "wrongCredentials";
-            
             echo \App::$TWIG->render("login.twig", $output);
             exit;
         }
+    }
+    
+    public static function logout()
+    {   
+        Auth::logout();
+        \App::go("");
     }
 
 }

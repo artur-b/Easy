@@ -1,6 +1,5 @@
 body {
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding-top: 0px;
     color: #3c3c3c;
 }
 
@@ -29,5 +28,5 @@ body {
 
 .loginPanel {
     width: 400px;
-    margin: 0px auto;
+    margin: 100px auto;
 }

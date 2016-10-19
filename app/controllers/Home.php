@@ -6,7 +6,6 @@ class Home
 {
     public static function start()
     {
-        echo "Welcome to " . APP_NAME . "<br/>";
-        // header("Location: ...");
+        echo \App::$TWIG->render("home.twig");
     }    
 }

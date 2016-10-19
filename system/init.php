@@ -33,7 +33,7 @@ define("APP_PATH", APP_ROOT . $_appFolder);
 
 define("APP_URL", isset($_CONF['APP_URL']) ? $_CONF['APP_URL'] : $_SERVER['SERVER_NAME']);
 
-define("APP_NAME", isset($_CONF['APP_NAME']) ? $_CONF['APP_NAME'] : "CodeCompass App");
+define("APP_NAME", isset($_CONF['APP_NAME']) ? $_CONF['APP_NAME'] : "CodeCompassApp");
 
 define("DB_HOST", $_CONF['DB_HOST']);
 define("DB_PORT", $_CONF['DB_PORT']);
