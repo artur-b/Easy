@@ -30,3 +30,17 @@ body {
     width: 400px;
     margin: 100px auto;
 }
+
+.debugPanel {
+    padding: 0px 10px;
+    font-family: monospace;
+    font-size: 11px;
+    color: gray;
+}
+
+.navbar-custom {
+    background-color: #1976D2;
+    border: 0px;
+}
+
+.jumbotron p.small {font-size: 14px;}

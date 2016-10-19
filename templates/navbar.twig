@@ -1,5 +1,5 @@
-<nav class="navbar navbar-custom">
-    <div class="container-fluid">
+<nav class="navbar navbar-inverse navbar-custom">
+    <div class="container">
     <div class="navbar-header">
         <a class="navbar-brand" href="{{ APP_URL }}"><i class="fa fa-check-square-o fa-lg"></i> {{ APP_NAME }}</a>
     </div>
@@ -7,9 +7,10 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
             {% if session.authId %}
-                <li><a href="/auth/logout">Logout</a></li>
+                <li><a href="/auth/logout">Wyloguj</a></li>
             {% else %}
-                <li><a href="/auth/login">Login</a></li>
+                <li><a href="/auth/register">Rejestracja</a></li>
+                <li><a href="/auth/login">Zaloguj</a></li>
             {% endif %}
       </ul>
     </div><!-- /.navbar-collapse -->

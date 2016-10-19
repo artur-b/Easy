@@ -38,5 +38,27 @@ class AuthController
         Auth::logout();
         \App::go("");
     }
+    
+    public static function register()
+    {
+        echo \App::$TWIG->render("register.twig");
+        exit;
+    }
+    
+    public static function signup()
+    {
+        $_POST['login'] = strtolower(trim($_POST['login']));
+        $_POST['password'] = trim($_POST['password']);
+
+        if(Auth::authUser($_POST['login'], $_POST['password'])) {            
+            \App::go("user/dashboard");
+        }
+        else {            
+            if(isset($_POST['email'])) $output['email'] = $_POST['email'];
+            $output['error'] = "wrongCredentials";
+            echo \App::$TWIG->render("login.twig", $output);
+            exit;
+        }
+    }
 
 }
