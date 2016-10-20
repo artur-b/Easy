@@ -48,6 +48,10 @@ class Auth
         else return null;
     }
     
+    public static function setId($authId) {
+        $_SESSION['authId'] = $authId;        
+    }
+    
     public static function getUser($authId = null)
     {
         return Users::getById($authId);

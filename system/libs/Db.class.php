@@ -38,5 +38,36 @@ class Db
         
         return self::$_DB[ $database ];
     }
+    
+    public static function sqlValues($separator = false, $array = false, $mergeKeys = false){
+        if(!$separator || !$array) return false;
+
+        if($mergeKeys){
+            foreach($array as $key => $value){
+                if(!isset($output)) $output = $key;
+                else $output .= $separator.$key;
+            }
+        }
+        else $output = implode($separator, $array);
+
+        return $output;
+    }
+    
+    public static function sqlSet($array = false, $mergeKeys = false){
+        if(!$array) return false;
+
+        foreach($array as $key => $value){
+            if($mergeKeys){
+                if(!isset($output)) $output = ' '.$key.' = :'.$key.' ';
+                else $output .= ' , '.$key.' = :'.$key.' ';
+            }
+            else {
+                if(!isset($output)) $output = ' '.$value.' = :'.$value.' ';
+                else $output .= ' , '.$value.' = :'.$value.' ';
+            }
+        }
+
+        return $output;
+    }
 
 }

@@ -1,0 +1,21 @@
+{% include 'header.twig' %}    
+    <div class="container">
+        <div class="panel panel-info loginPanel">
+            <div class="panel-heading"><h3>Reset hasła</h3></div>
+            <div class="panel-body">
+                {% if msg.error %}
+                    <div class="alert alert-danger">{{ msg.error }}</div>
+                {% endif %}
+                {% if msg.success %}
+                    <div class="alert alert-success">{{ msg.success }}</div>
+                {% endif %}                
+                <form class="form-signin" action="{{ APP_URL }}/auth/forgotPassword" method="POST">
+                    <label for="email" class="sr-only">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" {% if old.email %}value="{{ old.email }}"{% endif %}required autofocus/>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Resetuj</button>
+                </form>
+            </div>
+            <div class="panel-footer"><a href="{{ APP_URL }}">Powrót</a></div>
+        </div>        
+    </div><!-- /.container   -->
+{% include 'footer.twig' %}

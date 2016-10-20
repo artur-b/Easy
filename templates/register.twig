@@ -3,22 +3,24 @@
         <div class="panel panel-info loginPanel">
             <div class="panel-heading"><h3>Zarejestruj się</h3></div>
             <div class="panel-body">
-                {% if error %}
-                    <div class="alert alert-danger">{{error}}</div>
+                {% if msg.error %}
+                    <div class="alert alert-danger">{{ msg.error }}</div>
                 {% endif %}                    
                 <form class="form-signin" action="{{APP_URL}}/auth/signup" method="POST">
-                    <label for="login" class="sr-only">Email</label>
-                    <input type="email" id="login" name="login" class="form-control" placeholder="Email" required autofocus/>
+                    <label for="name" class="sr-only">Imię i nazwisko</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Imię i nazwisko" {% if old.name %}value="{{ old.name }}"{% endif %}required autofocus/>
+                    <label for="email" class="sr-only">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" {% if old.email %}value="{{ old.email }}"{% endif %}required/>
                     <label for="password" class="sr-only">Hasło</label>
                     <input type="password" id="password" name="password" class="form-control" placeholder="Hasło" required/>
                     <label for="pesel" class="sr-only">Pesel</label>
-                    <input type="text" id="pesel" name="pesel" class="form-control" placeholder="PESEL" required/>
+                    <input type="text" id="pesel" name="pesel" class="form-control" placeholder="PESEL" {% if old.pesel %}value="{{ old.pesel }}"{% endif %}required/>
                     <label for="phone" class="sr-only">Telefon</label>
-                    <input type="text" id="phone" name="phome" class="form-control" placeholder="Telefon" required/>
-                    
+                    <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefon" {% if old.phone %}value="{{ old.phone }}"{% endif %}required/>                    
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
                 </form>
             </div>
+            <div class="panel-footer"><a href="{{ APP_URL }}">Powrót</a></div>
         </div>
     </div><!-- /.container   -->
 {% include 'footer.twig' %}
