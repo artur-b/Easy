@@ -32,7 +32,6 @@ define("APP_ROOT", isset($_CONF['APP_ROOT']) ? $_CONF['APP_ROOT'] : $_SERVER['DO
 define("APP_PATH", APP_ROOT . $_appFolder);
 
 define("APP_URL", isset($_CONF['APP_URL']) ? $_CONF['APP_URL'] : $_SERVER['SERVER_NAME']);
-
 define("APP_NAME", isset($_CONF['APP_NAME']) ? $_CONF['APP_NAME'] : "CodeCompassApp");
 
 define("DB_HOST", $_CONF['DB_HOST']);
@@ -40,6 +39,11 @@ define("DB_PORT", $_CONF['DB_PORT']);
 define("DB_NAME", $_CONF['DB_NAME']);
 define("DB_USER", $_CONF['DB_USER']);
 define("DB_PASS", $_CONF['DB_PASS']);
+
+define("MAIL_HOST", $_CONF['MAIL_HOST']);
+define("MAIL_PORT", $_CONF['MAIL_PORT']);
+define("MAIL_USER", $_CONF['MAIL_USER']);
+define("MAIL_PASS", $_CONF['MAIL_PASS']);
 
 date_default_timezone_set('Europe/Warsaw');
 setlocale(LC_TIME, "pl_PL.utf8");

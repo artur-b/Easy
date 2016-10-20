@@ -7,9 +7,9 @@ class Mail
     private static
         $MAIL = null,
         $DATA = [        
-            'host'  => 'smtp.gmail.com',
-            'user'  => 'user',
-            'pass'  => 'pass',
+            'host'  => MAIL_HOST,
+            'user'  => MAIL_USER,
+            'pass'  => MAIL_PASS,
             'from'  => 'no_reply@gmail.com',
             'html' => true,
             'char' => 'UTF-8',
@@ -18,7 +18,7 @@ class Mail
             'subj' => '',
             'body' => '',
             'debg' => false,
-            'port' => 587,
+            'port' => MAIL_POST,
             'smsc' => 'tls',
             'atch' => array()
         ];
