@@ -8,9 +8,9 @@ class Mail
         $MAIL = null,
         $DATA = [        
             'host'  => 'smtp.gmail.com',
-            'user'  => 'parostatek15@gmail.com',
-            'pass'  => 'Parostatek.2016',
-            'from'  => 'parostatek15@gmail.com',
+            'user'  => 'user',
+            'pass'  => 'pass',
+            'from'  => 'no_reply@gmail.com',
             'html' => true,
             'char' => 'UTF-8',
             'smtp' => true,
