@@ -3,12 +3,14 @@
         <div class="panel panel-info loginPanel">
             <div class="panel-heading"><h3>Login</h3></div>
             <div class="panel-body">
+                <div id="msgBox">
                 {% if msg.error %}
                     <div class="alert alert-danger">{{ msg.error }}</div>
                 {% endif %}
                 {% if msg.success %}
                     <div class="alert alert-success">{{ msg.success }}</div>
                 {% endif %}
+                </div>
                 <form class="form-signin" action="{{ APP_URL }}/auth/signin" method="POST">
                     <label for="login" class="sr-only">Email</label>
                     <input type="email" id="login" name="login" class="form-control" placeholder="Email" {% if old.login %}value="{{ old.login }}"{% endif %}required autofocus/>

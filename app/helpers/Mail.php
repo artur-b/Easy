@@ -18,7 +18,7 @@ class Mail
             'subj' => '',
             'body' => '',
             'debg' => false,
-            'port' => MAIL_POST,
+            'port' => MAIL_PORT,
             'smsc' => 'tls',
             'atch' => array()
         ];

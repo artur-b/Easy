@@ -1,0 +1,28 @@
+{% include 'header.twig' %}    
+    <div class="container">
+        <div class="panel panel-info loginPanel">
+            <div class="panel-heading"><h3>Nowe zamówienie</h3></div>
+            <div class="panel-body">
+                {% if msg.error %}
+                    <div class="alert alert-danger">{{ msg.error }}</div>
+                {% endif %}                    
+                <form class="form-signin" action="{{APP_URL}}/order/register" method="POST">
+                    <label for="cruise" class="sr-only">Numer rejsu</label>
+                    <input type="text" id="cruise" name="cruise" class="form-control" placeholder="Numer rejsu 05/CH/16"{% if old.cruise %}value="{{ cruise }}"{% endif %}required autofocus/>
+                    <label for="name" class="sr-only">Imię i nazwisko</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Imię i nazwisko" {% if old.name %}value="{{ old.name }}"{% endif %}required/>
+                    <label for="email" class="sr-only">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" {% if old.email %}value="{{ old.email }}"{% endif %}required/>
+                    <label for="pesel" class="sr-only">Pesel</label>
+                    <input type="text" id="pesel" name="pesel" class="form-control" placeholder="PESEL" {% if old.pesel %}value="{{ old.pesel }}"{% endif %}required/>
+                    <label for="phone" class="sr-only">Telefon</label>
+                    <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefon" {% if old.phone %}value="{{ old.phone }}"{% endif %}required/>
+                    <label for="code" class="sr-only">Kod zniżkowy</label>
+                    <input type="text" id="code" name="code" class="form-control" {% if code %}value="{{ code }}" disabled="disabled"{% endif %}/>                   
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Wyślij</button>
+                </form>
+            </div>
+            <div class="panel-footer"><a href="{{ APP_URL }}">Powrót</a></div>
+        </div>
+    </div><!-- /.container   -->
+{% include 'footer.twig' %}
