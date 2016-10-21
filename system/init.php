@@ -45,6 +45,10 @@ define("MAIL_PORT", $_CONF['MAIL_PORT']);
 define("MAIL_USER", $_CONF['MAIL_USER']);
 define("MAIL_PASS", $_CONF['MAIL_PASS']);
 
+define("FB_APP_ID", $_CONF['FB_APP_ID']);
+define("FB_APP_SECRET", $_CONF['FB_APP_SECRET']);
+define("FB_CALLBACK", $_CONF['FB_CALLBACK']);
+
 date_default_timezone_set('Europe/Warsaw');
 setlocale(LC_TIME, "pl_PL.utf8");
 

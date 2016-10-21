@@ -17,8 +17,12 @@ class AuthController
     }
     
     public static function login()
-    {                
-        echo \App::$TWIG->render('login.twig', []);
+    {   
+        $fb = Auth::getFb();
+        $helper = $fb->getRedirectLoginHelper();
+        $fbLoginUrl = $helper->getLoginUrl(APP_URL . "/auth/fbCallback", ["public_profile", "email"]);
+        
+        echo \App::$TWIG->render('login.twig', ['fbLoginUrl' => $fbLoginUrl]);
         exit;
     }
     
@@ -202,4 +206,39 @@ class AuthController
         exit;
     }
 
+    public static function fbCallback()
+    {
+        $fb = Auth::getFB();
+        $helper = $fb->getRedirectLoginHelper();
+        try {
+            $accessToken = $helper->getAccessToken();
+        } catch (Facebook\Exceptions\FacebookResponseException $e) {
+            echo 'Graph returned an error: ' . $e->getMessage();
+            return false;
+        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            return false;
+        }
+        if (isset($accessToken)) {
+            $_SESSION['facebook_access_token'] = (string) $accessToken;
+            $fb->setDefaultAccessToken((string) $accessToken);
+         
+            try {
+                $response = $fb->get('/me?fields=name,email');
+                $user = $response->getGraphUser();
+            } catch(Facebook\Exceptions\FacebookResponseException $e) {
+                echo '<p>Graph returned an error:</p> ' . $e->getMessage();
+                exit;
+            } catch(Facebook\Exceptions\FacebookSDKException $e) {
+                echo '<p>Facebook SDK returned an error:</p> ' . $e->getMessage();
+                exit;
+            }
+            if (Auth::authFbUser($user['email'])) {
+                \App::go("user/dashboard");
+            } else {
+                $output['msg']['error'] = "registerFirst";
+                echo \App::$TWIG->render("register.twig", $output);
+            }
+        }
+    }
 }

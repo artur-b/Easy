@@ -9,6 +9,7 @@ use app\models\Users as Users;
 class Auth 
 {
     private static $_AUTH = null;
+    private static $_FB = null;
     
     public static function authUser($login = false, $password = false) 
     {
@@ -33,11 +34,42 @@ class Auth
                 header("Location: " . APP_URL . "/login/passRecoveryLink/" . $hash);
                 return false;
             }
- */
+*/
             if(self::checkPassword($password, $user['Password'])) {
                 $_SESSION['authId'] = $user['ID'];
                 return true;
             }
+        }
+        
+        return false;
+    }
+
+    public static function authFbUser($login = false) 
+    {
+        $user = Users::getByEmail($login);
+        
+        if(!empty($user)) {
+            if ($user['Verified'] < -1) {   // user blocked
+                return false;
+            }
+/*
+            if($customer["FirstLogin"] == 1) {                
+                Logger::debug("First login detected");
+                if(!self::checkPassword($password, $customer["Password"])) {
+                    return false;
+                }
+                $hash = Common::generateHash(64);
+                ModelCustomers::updateCustomerById($customer["ID"], [
+                    "resetPasswordDate" => time() + 3600,
+                    "resetPasswordHash" => $hash
+                ]);
+                Logger::debug("Redirection to ".APP_URL."/login/passRecoveryLink/".$hash);
+                header("Location: " . APP_URL . "/login/passRecoveryLink/" . $hash);
+                return false;
+            }
+*/
+            $_SESSION['authId'] = $user['ID'];
+            return true;
         }
         
         return false;
@@ -81,4 +113,21 @@ class Auth
         return crypt($password, $salt);
     }
 */
+    private static function setFB()
+    {
+        if (empty(self::$_FB)) {
+            self::$_FB = new \Facebook\Facebook([
+                'app_id'        => FB_APP_ID,
+                'app_secret'    => FB_APP_SECRET,
+                'default_graph_version' => 'v2.8',
+            ]);
+        }
+    }
+    
+    public static function getFB()
+    {
+        self::setFB();
+        return self::$_FB;
+    }
+    
 }
