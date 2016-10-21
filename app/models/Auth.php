@@ -63,7 +63,6 @@ class Auth
 
     public static function checkPassword($password = false, $hash = false) {
         if(!$password || !$hash) return false;
-        echo "$password :: $hash<hr>";
         if(crypt($password, $hash) == $hash) {
             return true;
         }

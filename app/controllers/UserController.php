@@ -6,6 +6,7 @@ use system\libs\Logger as Logger;
 
 use app\models\Auth as Auth;
 use app\models\Users as Users;
+use app\models\Codes as Codes;
 
 /**
  * Description of UserController
@@ -22,7 +23,16 @@ class UserController
     
     public static function dashboard()
     {
-        $output = ['user' => Users::getById(Auth::getId())];
+        $authId = Auth::getId();
+        
+        $code = Codes::getByUserId($authId);        
+        if (empty($code)) {
+            $key = Codes::create($authId);
+        } else {
+            $key = $code['UserKey'];
+        }
+        $output['user'] = Users::getById($authId);
+        $output['user']['Key'] = $key;
         echo \App::$TWIG->render("dashboard.twig", $output);
     }
 }

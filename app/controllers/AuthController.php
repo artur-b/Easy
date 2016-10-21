@@ -24,6 +24,8 @@ class AuthController
     
     public static function signin()
     {
+        $output['old'] = $_POST;
+        
         $_POST['login'] = strtolower(trim($_POST['login']));
         $_POST['password'] = trim($_POST['password']);
 
