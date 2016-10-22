@@ -240,6 +240,7 @@ class AuthController
                     'Email'     => $user['email'],
                     'Password'  => '',
                     'Name'      => $user['name'],
+                    'Verified'  => 1,
                 ]);
                 Auth::authFbUser($user['email']);
                 \App::go("user/edit/" . $id);
