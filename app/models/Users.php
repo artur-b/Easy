@@ -8,7 +8,20 @@ use system\libs\Db as DB;
  *
  * @author bzd
  */
-class Users {
+class Users 
+{
+    public static function getAll()
+    {
+        $db = DB::Connect();
+        
+        $sqlQuery = ' SELECT * FROM Users ';
+        
+        foreach($db->query($sqlQuery) as $sqlRow) {
+            $result[] = $sqlRow;
+        }
+        
+        return $result;
+    }
     
     public static function getById($id = null)
     {

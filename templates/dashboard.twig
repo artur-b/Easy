@@ -22,6 +22,9 @@
                 {% endif %}
                 </div>
             </form>
+            {% if user.Facebook %}    
+                <a href="{{ fbUrl }}" class="btn btn-primary">Wyślij kod</a>
+            {% endif %}
         {% else %}
             <div class="well">
                 <p>Twoje konto nie zostało jeszcze aktywowane.</p>

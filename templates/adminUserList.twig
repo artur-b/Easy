@@ -1,0 +1,32 @@
+{% include 'header.twig' %}
+    {% include 'navbar.twig' %}
+
+    <div class="container-fluid content">
+
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table-hover">
+                <tr>
+                    <th>#</th>
+                    <th>Ambasador</th>
+                    <th>Email</th>
+                    <th>PESEL</th>
+                    <th>Telefon</th>
+                    <th>Rejestracja</th>
+                </tr>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.ID }}</td>
+                    <td>{{ user.Name }}</td>
+                    <td>{{ user.Email }}</td>
+                    <td>{{ user.Pesel }}</td>
+                    <td>{{ user.Phone }}</td>
+                    <td>{{ user.Created }}</td>
+                </tr>
+                {% endfor %}
+            </div>
+        </table>
+    </div><!-- /.container   -->
+
+    </div>
+{% include 'footer.twig' %}

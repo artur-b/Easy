@@ -35,6 +35,12 @@ class UserController
         }
         $output['user'] = Users::getById($authId);
         $output['user']['Key'] = $key;
+        // quick hack - move to Db
+        if (empty($output['user']['Password'])) {
+            $output['user']['Facebook'] = 1;
+            $output['fbUrl'] = "http://www.facebook.com/dialog/send?app_id=" . FB_APP_ID . "&amp;link=" . APP_URL . "&amp;redirect_uri=" . APP_URL . "/order/create/" . $key;
+        }
+        
         echo \App::$TWIG->render("dashboard.twig", $output);
     }
     
