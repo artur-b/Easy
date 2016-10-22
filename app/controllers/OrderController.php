@@ -40,7 +40,7 @@ class OrderController
             $_POST['pesel'] = trim($_POST['pesel']);
             $_POST['phone'] = trim($_POST['phone']);
             $_POST['cruise'] = trim($_POST['cruise']);
-            $_POST['code'] = trim($_POST['codee']);
+            $_POST['code'] = trim($_POST['code']);
                 
             $nameArr = explode(" ", $_POST['name']);
             foreach ($nameArr as $n) {

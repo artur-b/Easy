@@ -25,8 +25,8 @@ class App
     public static $AUTH     = null;
         
     private static $PUBLIC_API = [
-        "order/create",
-        "order/register",
+        "OrderController/create",
+        "OrderController/register",
     ]; 
 
     public static function start()
@@ -42,6 +42,7 @@ class App
     public static function getRoute() 
     {
         $_route = Router::parse();
+        Logger::debug($_route);
                 
         if (!empty($_route['controller']) && !in_array($_route['controller'], self::$SYSTEM_CONTROLLERS)) {
             $_route['controller'] .= "Controller";
@@ -97,7 +98,10 @@ class App
         Session::start();
 
         //do not check Session/AUTH if public api
-        if (in_array(self::$PAGE['controller'] . '/' . self::$PAGE['method'], self::$PUBLIC_API)) return;        
+        if (in_array(self::$PAGE['controller'] . '/' . self::$PAGE['method'], self::$PUBLIC_API)) {
+            Logger::debug("Public method " . self::$PAGE['controller'] . '/' . self::$PAGE['method']);
+            return;
+        }
         
         $authId = Auth::getId();
         if (!empty($authId)) self::$AUTH = Auth::getUser($authId);
