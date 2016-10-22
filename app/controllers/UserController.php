@@ -42,11 +42,24 @@ class UserController
     {
         $user = Users::getById($userId);
         
-        $output['msg']['warning'] = "completeForm";
+        if (empty($user['Pesel']) || empty ($user['Phone'])) {
+            $output['msg']['warning'] = "completeForm";
+        }
         $output['user'] = $user;
         echo \App::$TWIG->render("userEdit.twig", $output);
     }
     
+    public static function update()
+    {
+        Users::updateById(Auth::getId(), [
+            'Name'  => $_POST['name'],
+            'Pesel' => $_POST['pesel'],
+            'Phone' => $_POST['phone']
+        ]);
+        \App::go("user/dashboard");
+    }
+
+
     public static function invite()
     {
         $output = [];

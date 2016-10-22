@@ -1,14 +1,14 @@
 {% include 'header.twig' %}    
     <div class="container">
         <div class="panel panel-info loginPanel">
-            <div class="panel-heading"><h3>Uzupełnij dane</h3></div>
+            <div class="panel-heading"><h3>Edycja danych</h3></div>
             <div class="panel-body">
                 <div id="msgBox">
                     {% if msg.success %}
                         <div class="alert alert-success">{{ msg.success }}</div>
                     {% endif %}
-                    {% if msg.warn %}
-                        <div class="alert alert-warning">{{ msg.warn }}</div>
+                    {% if msg.warning %}
+                        <div class="alert alert-warning">{{ msg.warning }}</div>
                     {% endif %}
                     {% if msg.error %}
                         <div class="alert alert-danger">{{ msg.error }}</div>
