@@ -126,25 +126,17 @@ class App
     }
 
     public static function setAdditionalData() {
-        // Stale cookies w smarty sa zepsute. Beda poprawione w nowej wersji smarty. Trzeba cookiesy przemycic inaczej.
-        self::$COOKIES = $_COOKIE;
 
         if(is_readable(APP_PATH . "/public/js/page/" . self::$PAGE["controller"] . ".js")) self::$PAGE["js"] = APP_URL . "/public/js/page/" . self::$PAGE["controller"] . ".js";
         if(is_readable(APP_PATH . "/public/css/page/" . self::$PAGE["controller"] . ".css")) self::$PAGE["css"] = APP_URL . "/public/css/page/" . self::$PAGE["controller"] . ".css";
     }
 
-    public static function go($controller = false, $method = false, $parameters = false)
+    public static function go($path = null)
     {        
         $url = APP_URL;        
         
-        if($controller && !empty($controller)) {
-            $url .= "/" . $controller;
-            if($method) {
-                $url .= "/" . $method;
-                if($parameters){
-                    $url .= "/" . implode(",", $parameters);
-                }
-            }
+        if(!empty($path)) {
+            $url .= "/" . $path;
         }
         header("Location: " . $url);
         exit;

@@ -236,8 +236,13 @@ class AuthController
             if (Auth::authFbUser($user['email'])) {
                 \App::go("user/dashboard");
             } else {
-                $output['msg']['error'] = "registerFirst";
-                echo \App::$TWIG->render("register.twig", $output);
+                $id = Users::create([
+                    'Email'     => $user['email'],
+                    'Password'  => '',
+                    'Name'      => $user['name'],
+                ]);
+                Auth::authFbUser($user['email']);
+                \App::go("user/edit/" . $id);
             }
         }
     }

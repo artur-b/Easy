@@ -38,6 +38,15 @@ class UserController
         echo \App::$TWIG->render("dashboard.twig", $output);
     }
     
+    public static function edit($userId = null)
+    {
+        $user = Users::getById($userId);
+        
+        $output['msg']['warning'] = "completeForm";
+        $output['user'] = $user;
+        echo \App::$TWIG->render("userEdit.twig", $output);
+    }
+    
     public static function invite()
     {
         $output = [];

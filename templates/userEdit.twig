@@ -1,0 +1,31 @@
+{% include 'header.twig' %}    
+    <div class="container">
+        <div class="panel panel-info loginPanel">
+            <div class="panel-heading"><h3>Uzupełnij dane</h3></div>
+            <div class="panel-body">
+                <div id="msgBox">
+                    {% if msg.success %}
+                        <div class="alert alert-success">{{ msg.success }}</div>
+                    {% endif %}
+                    {% if msg.warn %}
+                        <div class="alert alert-warning">{{ msg.warn }}</div>
+                    {% endif %}
+                    {% if msg.error %}
+                        <div class="alert alert-danger">{{ msg.error }}</div>
+                    {% endif %}                    
+                </div>
+                <form class="form-signin" action="{{APP_URL}}/user/update" method="POST">
+                    <label for="name" class="sr-only">Imię i nazwisko</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Imię i nazwisko" {% if user.name %}value="{{ user.name }}"{% endif %}required autofocus/>
+                    <label for="email" class="sr-only">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" {% if user.email %}value="{{ user.email }}"{% endif %}disabled="disabled"/>
+                    <label for="pesel" class="sr-only">Pesel</label>
+                    <input type="text" id="pesel" name="pesel" class="form-control" placeholder="PESEL" {% if old.pesel %}value="{{ old.pesel }}"{% endif %}required/>
+                    <label for="phone" class="sr-only">Telefon</label>
+                    <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefon" {% if old.phone %}value="{{ old.phone }}"{% endif %}required/>                    
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Zapisz</button>
+                </form>
+            </div>
+        </div>
+    </div><!-- /.container   -->
+{% include 'footer.twig' %}
