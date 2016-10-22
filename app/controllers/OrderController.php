@@ -5,10 +5,9 @@ namespace app\controllers;
 use system\libs\Logger as Logger;
 
 use app\models\Auth as Auth;
-use app\models\Users as Users;
-use app\models\Codes as Codes;
+use app\models\Orders as Orders;
 
-use app\helpers\Mail as Mail;
+//use app\helpers\Mail as Mail;
 
 /**
  * Description of OrderController
@@ -25,7 +24,7 @@ class OrderController
     
     public static function create($key)
     {
-        // for testing purposes
+        // for testing purposes, mae sure we are out od auth session
         Auth::logout();
         
         $output['code'] = $key;
@@ -35,9 +34,36 @@ class OrderController
 
     public static function register()
     {        
-        echo \App::$TWIG->render("registerOrder.twig");
-        exit;
+        if (!empty($_POST)) {
+            $_POST['name'] = trim($_POST['name']);
+            $_POST['email'] = strtolower(trim($_POST['email']));
+            $_POST['pesel'] = trim($_POST['pesel']);
+            $_POST['phone'] = trim($_POST['phone']);
+            $_POST['cruise'] = trim($_POST['cruise']);
+            $_POST['code'] = trim($_POST['codee']);
+                
+            $nameArr = explode(" ", $_POST['name']);
+            foreach ($nameArr as $n) {
+                $n = ucfirst(strtolower($n));
+            }
+            $name = implode(" ", $nameArr);
+            
+            // TODO - check for duplicates
+                        
+            $id = Orders::create([
+                'CustomerName'      => $name,
+                'CustomerEmail'     => $_POST['email'],
+                'CustomerPhone'     => $_POST['phone'],
+                'CustomerPesel'     => $_POST['pesel'],
+                'CruiseId'          => $_POST['cruise'],
+                'Code'              => $_POST['code'],
+            ]);
+        }
+        if ($id) {
+            echo \App::$TWIG->render("registerOrder.twig");
+        } else {
+            echo \App::$TWIG->render("registerOrder.twig");
+        }
     }
 
-    
 }

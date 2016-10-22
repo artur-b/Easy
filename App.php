@@ -25,6 +25,8 @@ class App
     public static $AUTH     = null;
         
     private static $PUBLIC_API = [
+        "order/create",
+        "order/register",
     ]; 
 
     public static function start()
