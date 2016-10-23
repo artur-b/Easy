@@ -1,0 +1,7 @@
+<div class="container" id="adminMenu">
+    <ul class="nav nav-tabs nav-justified">
+        <li class="{% if (tab==1) %}active{% endif %}"><a href="{{ APP_URL }}/admin/dashboard"><i class="fa fa-home"></i></a></li>
+        <li class="{% if (tab==2) %}active{% endif %}"><a href="{{ APP_URL }}/admin/users">Klienci</a></li>
+        <li class="{% if (tab==3) %}active{% endif %}"><a href="{{ APP_URL }}/admin/orders">Zamówienia</a></li>
+    </ul>
+</div>

@@ -1,7 +1,7 @@
 {% include 'header.twig' %}
     {% include 'navbar.twig' %}
     
-    {% include 'adminMenu.twig' with {'tab' : 2 } %}
+    {% include 'adminMenu.twig' with {'tab' : 3 } %}
 
     <div class="container-fluid content">
 
@@ -16,13 +16,13 @@
                     <th>Telefon</th>
                     <th>Rejestracja</th>
                 </tr>
-                {% for user in users %}
+                {% for order in orders %}
                 <tr>
                     <td>{{ user.ID }}</td>
-                    <td>{{ user.Name }}</td>
-                    <td>{{ user.Email }}</td>
-                    <td>{{ user.Pesel }}</td>
-                    <td>{{ user.Phone }}</td>
+                    <td>{{ user.CustomerName }}</td>
+                    <td>{{ user.CustomerEmail }}</td>
+                    <td>{{ user.CustomerPesel }}</td>
+                    <td>{{ user.CustomerPhone }}</td>
                     <td>{{ user.Created }}</td>
                 </tr>
                 {% endfor %}

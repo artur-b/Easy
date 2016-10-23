@@ -8,7 +8,21 @@ use system\libs\Db as DB;
  *
  * @author bzd
  */
-class Orders {
+class Orders 
+{
+
+    public static function getAll()
+    {
+        $db = DB::Connect();
+        
+        $sqlQuery = ' SELECT * FROM Orders ';
+        
+        foreach($db->query($sqlQuery) as $sqlRow) {
+            $result[] = $sqlRow;
+        }
+        
+        return $result;
+    }
     
     public static function getById($id = null)
     {

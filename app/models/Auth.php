@@ -6,8 +6,9 @@ use app\models\Users as Users;
 
 class Auth 
 {
-    private static $_AUTH = null;
-    private static $_FB = null;
+    private static $_AUTH   = 0;
+    private static $_ADMIN  = false;
+    private static $_FB     = null;
     
     public static function authUser($login = false, $password = false) 
     {
@@ -19,6 +20,10 @@ class Auth
             }
 
             if(self::checkPassword($password, $user['Password'])) {
+                self::$_AUTH = $user['ID'];
+                if ($user['Role'] == 2) {
+                    self::$_ADMIN = true;
+                }
                 self::setId($user['ID']);
                 return true;
             }
@@ -36,6 +41,10 @@ class Auth
                 return false;
             }
 
+            self::$_AUTH = $user['ID'];
+            if ($user['Role'] == 2) {
+                self::$_ADMIN = true;
+            }
             self::setId($user['ID']);
             return true;
         }
@@ -43,12 +52,14 @@ class Auth
         return false;
     }
     
-    public static function getId() {
+    public static function getId() 
+    {
         if(isset($_SESSION['authId']) && $_SESSION['authId'] > 0) return $_SESSION['authId'];
         else return null;
     }
     
-    private static function setId($authId) {
+    private static function setId($authId) 
+    {
         $_SESSION['authId'] = $authId;        
     }
     
@@ -57,11 +68,14 @@ class Auth
         return Users::getById($authId);
     }
 
-    public static function logout() {
+    public static function logout() 
+    {
         $_SESSION['authId'] = 0;
+        self::$_AUTH = 0;
     }
 
-    public static function checkPassword($password = false, $hash = false) {
+    public static function checkPassword($password = false, $hash = false) 
+    {
         if(!$password || !$hash) return false;
         if(crypt($password, $hash) == $hash) {
             return true;
@@ -84,6 +98,11 @@ class Auth
     {
         self::setFB();
         return self::$_FB;
+    }
+    
+    public static function isAdmin()
+    {
+        return self::$_ADMIN;
     }
     
 }

@@ -23,7 +23,6 @@ class AuthController
         $fbLoginUrl = $helper->getLoginUrl(APP_URL . "/auth/fbCallback", ["public_profile", "email"]);
         
         echo \App::$TWIG->render('login.twig', ['fbLoginUrl' => $fbLoginUrl]);
-        exit;
     }
     
     public static function signin()
@@ -33,14 +32,17 @@ class AuthController
         $_POST['login'] = strtolower(trim($_POST['login']));
         $_POST['password'] = trim($_POST['password']);
 
-        if(Auth::authUser($_POST['login'], $_POST['password'])) {            
-            \App::go("user/dashboard");
+        if(Auth::authUser($_POST['login'], $_POST['password'])) {
+            if (Auth::isAdmin()) {
+                \App::go("admin/dashboard");
+            } else {
+                \App::go("user/dashboard");
+            }
         }
         else {            
             if(isset($_POST['email'])) $output['email'] = $_POST['email'];
             $output['msg']['error'] = "wrongCredentials";
             echo \App::$TWIG->render("login.twig", $output);
-            exit;
         }
     }
     
@@ -53,7 +55,6 @@ class AuthController
     public static function register()
     {
         echo \App::$TWIG->render("register.twig");
-        exit;
     }
     
     public static function signup()
@@ -113,7 +114,6 @@ class AuthController
             $output['msg']['error'] = "registerFailed";
         }
         echo \App::$TWIG->render("login.twig", $output);
-        exit;
     }
     
     public static function verify($hash = null)
@@ -164,7 +164,6 @@ class AuthController
             }
         }        
         echo \App::$TWIG->render("forgot.twig", $output);
-        exit;
     }
     
     public static function resetPassword($hash = null)
@@ -180,7 +179,6 @@ class AuthController
             $output['msg']['error'] = "unknownHash";
             echo \App::$TWIG->render("login.twig", $output);
         }                
-        exit;
     }
     
     public static function updatePassword()
@@ -203,7 +201,6 @@ class AuthController
             $output['msg']['error'] = "unknownHash";
             echo \App::$TWIG->render("login.twig", $output);
         }                
-        exit;
     }
 
     public static function fbCallback()
@@ -247,4 +244,5 @@ class AuthController
             }
         }
     }
+    
 }

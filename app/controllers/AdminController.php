@@ -12,6 +12,16 @@ use app\models\Orders as Orders;
  */
 class AdminController 
 {
+    public static function start()
+    {
+        self::dashboard();
+    }
+    
+    public static function dashboard()
+    {
+        echo \App::$TWIG->render("adminDashboard.twig");
+    }
+
     public static function users()
     {
         $users = Users::getAll();
@@ -22,6 +32,10 @@ class AdminController
     
     public static function orders()
     {
+        $orders = Orders::getAll();
+        
+        $output['orders'] = $orders;
+        echo \App::$TWIG->render("adminOrderList.twig", $output);
         
     }
 }

@@ -44,3 +44,7 @@ body {
 }
 
 .jumbotron p.small {font-size: 14px;}
+
+#adminMenu {
+    margin-bottom: 20px;
+}
