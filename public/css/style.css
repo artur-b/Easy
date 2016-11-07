@@ -48,3 +48,7 @@ body {
 #adminMenu {
     margin-bottom: 20px;
 }
+
+.error {
+    color: red;
+}

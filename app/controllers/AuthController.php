@@ -54,7 +54,11 @@ class AuthController
     
     public static function register()
     {
-        echo \App::$TWIG->render("register.twig");
+        $fb = Auth::getFb();
+        $helper = $fb->getRedirectLoginHelper();
+        $fbLoginUrl = $helper->getLoginUrl(APP_URL . "/auth/fbCallback", ["public_profile", "email"]);
+
+        echo \App::$TWIG->render("register.twig", ['fbLoginUrl' => $fbLoginUrl]);
     }
     
     public static function signup()

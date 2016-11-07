@@ -18,8 +18,12 @@
                     <label for="pesel" class="sr-only">Pesel</label>
                     <input type="text" id="pesel" name="pesel" class="form-control" placeholder="PESEL" {% if old.pesel %}value="{{ old.pesel }}"{% endif %}required/>
                     <label for="phone" class="sr-only">Telefon</label>
-                    <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefon" {% if old.phone %}value="{{ old.phone }}"{% endif %}required/>                    
+                    <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefon" {% if old.phone %}value="{{ old.phone }}"{% endif %}required/>
+                    <div class="checkbox">
+                        <label><input id="rules-check" name="rules-check" type="checkbox" value="">Akceptuję <a href="#">Regulamin</a></label>
+                    </div>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
+                    <a id="register-with-fb" class="btn btn-lg btn-primary btn-block" type="button" href="{{ fbLoginUrl }}"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
                 </form>
             </div>
             <div class="panel-footer"><a href="{{ APP_URL }}">Powrót</a></div>
