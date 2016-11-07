@@ -58,7 +58,7 @@ class Auth
         else return null;
     }
     
-    private static function setId($authId) 
+    public static function setId($authId) 
     {
         $_SESSION['authId'] = $authId;        
     }

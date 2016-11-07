@@ -3,9 +3,11 @@
         <div class="panel panel-info loginPanel">
             <div class="panel-heading"><h3>Zarejestruj się</h3></div>
             <div class="panel-body">
+                <div id="msgBox">
                 {% if msg.error %}
                     <div class="alert alert-danger">{{ msg.error }}</div>
-                {% endif %}                    
+                {% endif %}      
+                </div>
                 <form class="form-signin" action="{{APP_URL}}/auth/signup" method="POST">
                     <label for="name" class="sr-only">Imię i nazwisko</label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Imię i nazwisko" {% if old.name %}value="{{ old.name }}"{% endif %}required autofocus/>

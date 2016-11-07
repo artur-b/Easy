@@ -15,6 +15,7 @@
                     <th>PESEL</th>
                     <th>Telefon</th>
                     <th>Rejestracja</th>
+                    <th>Kod</th>
                 </tr>
                 {% for user in users %}
                 <tr>
@@ -24,6 +25,7 @@
                     <td>{{ user.Pesel }}</td>
                     <td>{{ user.Phone }}</td>
                     <td>{{ user.Created }}</td>
+                    <td>{{ user.UserKey }}</td>                    
                 </tr>
                 {% endfor %}
             </div>

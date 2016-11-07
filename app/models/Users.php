@@ -14,7 +14,7 @@ class Users
     {
         $db = DB::Connect();
         
-        $sqlQuery = ' SELECT * FROM Users ';
+        $sqlQuery = ' SELECT u.*, c.UserKey FROM Users u JOIN Codes c ON (u.ID = c.UserID) ';
         
         foreach($db->query($sqlQuery) as $sqlRow) {
             $result[] = $sqlRow;

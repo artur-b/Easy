@@ -7,8 +7,18 @@
 
     <div class="container">
         <h4>{{ APP_NAME }} - panel administracyjny</h4>
-        <p>
-        </p>
+        <form class="form-inline" action="{{ APP_URL }}/admin/checkCode" method="POST">
+            <div class="form-group">
+                <label for="checkCode">Sprawdź kod:</label>
+                <input type="text" class="form-control" id="checkCode" name="checkCode" placeholder="Kod">
+            </div>            
+            <button type="submit" class="btn btn-default">Weryfikuj</button>
+            <div id="msgBox">
+            {% if msg.success %}
+                <div class="alert alert-success">{{ msg.success }}</div>
+            {% endif %}
+            </div>
+        </form>
     </div><!-- /.container   -->
 
     </div>

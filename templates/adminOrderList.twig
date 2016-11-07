@@ -15,15 +15,19 @@
                     <th>PESEL</th>
                     <th>Telefon</th>
                     <th>Rejestracja</th>
+                    <th>Rejs</th>
+                    <th>Kod</th>
                 </tr>
                 {% for order in orders %}
                 <tr>
-                    <td>{{ user.ID }}</td>
-                    <td>{{ user.CustomerName }}</td>
-                    <td>{{ user.CustomerEmail }}</td>
-                    <td>{{ user.CustomerPesel }}</td>
-                    <td>{{ user.CustomerPhone }}</td>
-                    <td>{{ user.Created }}</td>
+                    <td>{{ order.ID }}</td>
+                    <td>{{ order.CustomerName }}</td>
+                    <td>{{ order.CustomerEmail }}</td>
+                    <td>{{ order.CustomerPesel }}</td>
+                    <td>{{ order.CustomerPhone }}</td>
+                    <td>{{ order.Created }}</td>
+                    <td>{{ order.CruiseId }}</td>
+                    <td>{{ order.Code }}</td>
                 </tr>
                 {% endfor %}
             </div>

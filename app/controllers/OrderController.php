@@ -24,7 +24,7 @@ class OrderController
     
     public static function create($key)
     {
-        // for testing purposes, mae sure we are out od auth session
+        // for testing purposes, make sure we are out od auth session
         Auth::logout();
         
         $output['code'] = $key;
@@ -34,15 +34,19 @@ class OrderController
 
     public static function register()
     {        
-        if (!empty($_POST)) {
-            $_POST['name'] = trim($_POST['name']);
-            $_POST['email'] = strtolower(trim($_POST['email']));
-            $_POST['pesel'] = trim($_POST['pesel']);
-            $_POST['phone'] = trim($_POST['phone']);
-            $_POST['cruise'] = trim($_POST['cruise']);
-            $_POST['code'] = trim($_POST['code']);
+        $id = null;
+        
+        $form = filter_input_array(INPUT_POST);
+        
+        if (!empty($form)) {
+            $form['name'] = isset($form['name']) ? trim($form['name']) : "";
+            $form['email'] = isset($form['email']) ? strtolower(trim($form['email'])) : "";
+            $form['pesel'] = isset($form['pesel']) ? trim($form['pesel']) : 0;
+            $form['phone'] = isset($form['phone']) ? trim($form['phone']) : "";
+            $form['cruise'] = isset($form['cruise']) ? trim($form['cruise']) : "";
+            $form['code'] = isset($form['code']) ? trim($form['code']) : "";
                 
-            $nameArr = explode(" ", $_POST['name']);
+            $nameArr = explode(" ", $form['name']);
             foreach ($nameArr as $n) {
                 $n = ucfirst(strtolower($n));
             }
@@ -52,11 +56,11 @@ class OrderController
                         
             $id = Orders::create([
                 'CustomerName'      => $name,
-                'CustomerEmail'     => $_POST['email'],
-                'CustomerPhone'     => $_POST['phone'],
-                'CustomerPesel'     => $_POST['pesel'],
-                'CruiseId'          => $_POST['cruise'],
-                'Code'              => $_POST['code'],
+                'CustomerEmail'     => $form['email'],
+                'CustomerPhone'     => $form['phone'],
+                'CustomerPesel'     => $form['pesel'],
+                'CruiseId'          => $form['cruise'],
+                'Code'              => $form['code'],
             ]);
         }
         if ($id) {
