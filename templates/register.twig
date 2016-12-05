@@ -8,7 +8,7 @@
                     <div class="alert alert-danger">{{ msg.error }}</div>
                 {% endif %}      
                 </div>
-                <form class="form-signin" action="{{APP_URL}}/auth/signup" method="POST">
+                <form class="form-signup" action="{{APP_URL}}/auth/signup" method="POST">
                     <label for="name" class="sr-only">Imię i nazwisko</label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Imię i nazwisko" {% if old.name %}value="{{ old.name }}"{% endif %}required autofocus/>
                     <label for="email" class="sr-only">Email</label>
@@ -29,4 +29,8 @@
             <div class="panel-footer"><a href="{{ APP_URL }}">Powrót</a></div>
         </div>
     </div><!-- /.container   -->
-{% include 'footer.twig' %}
+{% embed 'footer.twig' %}
+    {% block pagejs %}
+    <script src="{{ APP_URL }}/js/register.js"></script>
+    {% endblock %}
+{% endembed %}

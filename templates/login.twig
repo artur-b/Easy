@@ -24,9 +24,8 @@
             <div class="panel-footer"><a href="{{ APP_URL }}">Powrót</a></div>
         </div>        
     </div><!-- /.container   -->
-{# include 'footer.twig' #}
 {% embed 'footer.twig' %}
     {% block pagejs %}
-        <script src="/js/login.js"></script>
+    <script src="{{ APP_URL }}/js/login.js"></script>
     {% endblock %}
 {% endembed %}

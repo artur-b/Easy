@@ -1,5 +1,5 @@
 $(function() {
-    $(".form-signin").validate({
+    $(".form-signup").validate({
         rules:
         {
             'rules-check':{ required:true }
@@ -19,6 +19,9 @@ $(function() {
                 error.insertAfter( element );
             }
         }
+    });
+    $("#register-with-fb").click(function() {                
+        return $(".form-signup").valid();
     });
 });
 
