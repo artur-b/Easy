@@ -11,37 +11,8 @@
     <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 
-    <script>     
-        $(document).ready(function() {
-            $("#msgBox").delay(3000).fadeOut();
-            $('#myTable').DataTable( {
-                'searching': true
-            } );        
-            $(".form-signin").validate({
-                rules:
-                {
-                    'rules-check':{ required:true }
-                },
-                messages:
-                {
-                    'rules-check':{ required:"(wymagana akceptacja)" }
-                },
-                errorPlacement: function(error, element)
-                {
-                    if (element.is(":checkbox"))
-                    {
-                        error.appendTo( element.parents('.checkbox') );
-                    }
-                    else
-                    { // This is the default behavior
-                        error.insertAfter( element );
-                    }
-                }
-            });
-            $("#register-with-fb").click(function() {                
-                return $(".form-signin").valid();
-            });
-        });
-    </script>
+    <script src="/public/js/common.js"></script>
+    {% block pagejs %}
+    {% endblock %}
 </body>
 </html>
