@@ -20,8 +20,8 @@ $(function() {
             }
         }
     });
-    $("#register-with-fb").click(function() {                
-        return $(".form-signup").valid();
+    $("#register-with-fb").click(function() {
+        $(".form-signup").validate().cancelSubmit = true;
     });
 });
 

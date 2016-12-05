@@ -130,13 +130,7 @@ class App
             self::$TWIG->addGlobal('DEBUG', 1);
         }
     }
-
-    public static function setAdditionalData() {
-
-        if(is_readable(APP_PATH . "/public/js/page/" . self::$PAGE["controller"] . ".js")) self::$PAGE["js"] = APP_URL . "/public/js/page/" . self::$PAGE["controller"] . ".js";
-        if(is_readable(APP_PATH . "/public/css/page/" . self::$PAGE["controller"] . ".css")) self::$PAGE["css"] = APP_URL . "/public/css/page/" . self::$PAGE["controller"] . ".css";
-    }
-
+    
     public static function go($path = null)
     {        
         $url = APP_URL;        
