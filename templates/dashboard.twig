@@ -24,6 +24,8 @@
             </form>
             {% if user.Facebook %}    
                 <a href="{{ fbUrl }}" class="btn btn-primary">Wyślij kod</a>
+            {% else %}
+                <a href="{{ fbUrl }}" class="btn btn-primary">Połącz z Facebookiem</a>
             {% endif %}
         {% else %}
             <div class="well">

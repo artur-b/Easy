@@ -42,9 +42,12 @@ class UserController
         
         $output['user'] = $user;
         $output['user']['Key'] = $key;
-        // quick hack - move to Db
-        if (empty($output['user']['Password'])) {
-            $output['user']['Facebook'] = 1;
+        
+        if (empty($user['Facebook'])) {
+            $fb = Auth::getFb();
+            $helper = $fb->getRedirectLoginHelper();
+            $output['fbUrl'] = $helper->getLoginUrl(APP_URL . "/auth/fbCallback", ["public_profile", "email"]);
+        } else {
             $output['fbUrl'] = "http://www.facebook.com/dialog/send?app_id=" . FB_APP_ID . "&link=" . APP_URL . "&redirect_uri=" . APP_URL . "/order/create/" . $key;
         }
         

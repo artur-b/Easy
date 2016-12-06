@@ -238,7 +238,7 @@ class AuthController
             } catch(Facebook\Exceptions\FacebookSDKException $e) {
                 echo '<p>Facebook SDK returned an error:</p> ' . $e->getMessage();
                 exit;
-            }
+	    }
             if (Auth::authFbUser($user['email'])) {
                 \App::go("user/dashboard");
             } else {
@@ -247,7 +247,8 @@ class AuthController
                     'Password'  => '',
                     'Name'      => $user['name'],
                     'Verified'  => 1,
-                ]);
+                    'Facebook'  => $user['id']
+                ]);                        
                 Auth::authFbUser($user['email']);
                 \App::go("user/edit/" . $id);
             }
