@@ -27,6 +27,10 @@ class AuthController
     
     public static function signin()
     {
+        if (empty($_POST)) {
+            self::logout();
+        }
+        
         $output['old'] = $_POST;
         
         $_POST['login'] = strtolower(trim($_POST['login']));
