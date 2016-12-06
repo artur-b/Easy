@@ -4,30 +4,33 @@ $(function() {
         {
             name:"required",
             email:"required email",
-            'rules-check':{ required:true }
+            password:"required",
+            pesel:"required",
+            phone:"required",
+            accept:"required"
         },
         messages:
         {
             name:"Pole wymagane",
             email:"Pole wymagane",
-            'rules-check':{ required:"(wymagana akceptacja)" }
+            password:"Pole wymagane",
+            pesel:"Pole wymagane",
+            phone:"Pole wymagane",
+            accept:"Wymagana akceptacja regulaminu"
         },
         errorPlacement: function(error, element)
         {
-            if (element.is(":checkbox"))
-            {
+            if (element.is(":checkbox")) {
                 error.appendTo( element.parents('.checkbox') );
-            }
-            else
-            {
+            } else {
                 error.insertAfter( element );
             }
         }
     });
     $("#register-with-fb").click(function() {
         var v = $(".form-signup").validate();
-        v.cancelSubmit = true;
-        v.element("#rules-check");
+        console.log(v);
+        return false;        
     });
 });
 
