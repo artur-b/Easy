@@ -240,6 +240,8 @@ class AuthController
                 exit;
 	    }
             if (Auth::authFbUser($user['email'])) {
+                // TODO check if email address is the same
+                // TODO update user facebook id
                 \App::go("user/dashboard");
             } else {
                 $id = Users::create([

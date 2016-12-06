@@ -7,7 +7,8 @@
         <h2 class="custom">Witaj, {{ user.Name }}!</h2>
         {% if user.Verified %}
             <div class="well">
-                <p>Twój kod ambasadorski: <b>{{ user.Key }}</b></p>
+                <p>Twój identyfikator: <b>{{ user.Uid }}</b></p>
+                <p>Twój kod ambasadorski: <b>{{ user.Key }}</b></p>                
                 <p>Twoje kredyty: <b>0</b></p>
             </div>
             <form class="form-inline" action="{{ APP_URL }}/user/invite" method="POST">

@@ -10,6 +10,8 @@ use system\libs\Db as DB;
  */
 class Users 
 {
+    private static $uidPrefix = "bwc";
+    
     public static function getAll()
     {
         $db = DB::Connect();
@@ -73,6 +75,8 @@ class Users
     
     public static function create($sqlData = false) {
         if(empty($sqlData) || !is_array($sqlData)) return 0;
+               
+        $sqlData['Uid'] = uniqid(self::$uidPrefix);
 
         $db = DB::Connect();
 

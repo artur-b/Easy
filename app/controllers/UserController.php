@@ -33,12 +33,8 @@ class UserController
         } else {
             $key = $code['UserKey'];
         }
-        
-        $user = Users::getById($authId);
                 
-        if (!$user['Rules']) {
-            \App::go("user/edit/" . $authId);
-        }
+        $user = Users::getById($authId);
         
         $output['user'] = $user;
         $output['user']['Key'] = $key;
