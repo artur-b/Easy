@@ -37,7 +37,7 @@ class UserController
         $user = Users::getById($authId);
                 
         if (!$user['Rules']) {
-            \App::go("user/edit", $authId);
+            \App::go("user/edit/" . $authId);
         }
         
         $output['user'] = $user;
