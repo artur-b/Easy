@@ -3,7 +3,7 @@ body {
     color: #3c3c3c;
 }
 
-.form-signin .form-control {
+.form-control {
   height: auto;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -13,17 +13,8 @@ body {
   margin-bottom: 10px;
   font-size: 16px;
 }
-.form-signin .form-control:focus {
+.form-control:focus {
   z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {  
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }
 
 .loginPanel {
@@ -52,3 +43,4 @@ body {
 .error {
     color: red;
 }
+

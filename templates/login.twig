@@ -16,7 +16,9 @@
                     <input type="email" id="login" name="login" class="form-control" placeholder="Email" {% if old.login %}value="{{ old.login }}"{% endif %}required autofocus/>
                     <label for="password" class="sr-only">Hasło</label>
                     <input type="password" id="password" name="password" class="form-control" placeholder="Hasło" required/>
-                    <a href="{{ APP_URL }}/auth/forgotPassword">Zapomniałem hasła</a>
+                    <div class="checkbox">
+                        <a href="{{ APP_URL }}/auth/forgotPassword">Zapomniałem hasła</a>
+                    </div>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
                     <a class="btn btn-lg btn-primary btn-block" type="submit" href="{{ fbLoginUrl }}"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
                 </form>
@@ -24,8 +26,4 @@
             <div class="panel-footer"><a href="{{ APP_URL }}">Powrót</a></div>
         </div>        
     </div><!-- /.container   -->
-{% embed 'footer.twig' %}
-    {% block pagejs %}
-    <script src="{{ APP_URL }}/js/login.js"></script>
-    {% endblock %}
-{% endembed %}
+{% include 'footer.twig' %}
