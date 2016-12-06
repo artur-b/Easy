@@ -23,7 +23,7 @@
                     <input type="text" id="pesel" name="pesel" class="form-control" placeholder="PESEL" {% if old.pesel %}value="{{ old.pesel }}"{% endif %}required/>
                     <label for="phone" class="sr-only">Telefon</label>
                     <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefon" {% if old.phone %}value="{{ old.phone }}"{% endif %}required/>
-                    {% if !user.Rules %}
+                    {% if not user.Rules %}
                     <div class="checkbox">
                         <label><input id="accept" name="accept" type="checkbox" value="">Akceptuję <a href="#">Regulamin</a></label>
                     </div>
