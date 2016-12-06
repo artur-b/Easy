@@ -33,7 +33,14 @@ class UserController
         } else {
             $key = $code['UserKey'];
         }
-        $output['user'] = Users::getById($authId);
+        
+        $user = Users::getById($authId);
+                
+        if (!$user['Rules']) {
+            \App::go("user/edit", $authId);
+        }
+        
+        $output['user'] = $user;
         $output['user']['Key'] = $key;
         // quick hack - move to Db
         if (empty($output['user']['Password'])) {
@@ -57,14 +64,17 @@ class UserController
     
     public static function update()
     {
-        Users::updateById(Auth::getId(), [
+        $userUpdate = [
             'Name'  => $_POST['name'],
             'Pesel' => $_POST['pesel'],
-            'Phone' => $_POST['phone']
-        ]);
+            'Phone' => $_POST['phone'],
+        ];
+        if (isset($_POST['accept'])) {
+            $userUpdate['Rules'] = 1;
+        }
+        Users::updateById(Auth::getId(), $userUpdate);
         \App::go("user/dashboard");
     }
-
 
     public static function invite()
     {

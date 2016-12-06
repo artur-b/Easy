@@ -95,6 +95,7 @@ class AuthController
             'Name'      => $name,
             'Pesel'     => $_POST['pesel'],
             'Phone'     => $_POST['phone'],
+            'Rules'     => isset($_POST['accept']) ? 1 : 0,
             'ResetPasswordHash' => $hash,
         ]);
         
