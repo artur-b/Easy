@@ -6,11 +6,16 @@
     <div class="container-fluid content">
 
     <div class="container">
-        <form action="admin/importOrders" method="post">
-            <label class="btn btn-default btn-file">
-                Importuj pliki <input id="xls" name="xls[]" type="file" multiple style="display:none">
-            </label> 
-        </form>
+        <div class="input-group">
+            <form action="admin/importOrders" method="post">
+                <label class="btn btn-primary btn-file">
+                    <i class="fa fa-folder-open" aria-hidden="true"></i> Przeglądaj <input id="xls" name="xls[]" type="file" multiple style="display:none">
+                </label> 
+            </form>
+            <span class="import-help">
+                Importuj pliki
+            </span>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-hover" id="myTable">
@@ -41,4 +46,8 @@
     </div><!-- /.container   -->
 
     </div>
-{% include 'footer.twig' %}
+{% embed 'footer.twig' %}
+    {% block pagejs %}
+    <script src="{{ APP_URL }}/js/import.js"></script>
+    {% endblock %}
+{% endembed %}
