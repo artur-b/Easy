@@ -69,5 +69,18 @@ class OrderController
             echo \App::$TWIG->render("registerOrder.twig");
         }
     }
+    
+    public static function import()
+    {
+        print_r($_FILES);
+        if (isset($_POST['xls'])) {
+            foreach ($_POST['xls'] as $file) {
+                echo "Loading $file...<br/>";
+                $objReader = \PHPExcel_IOFactory::createReader("Excel2007");
+//                $objPHPEx cel = $objReader->load
+            }            
+        }
+        \App::go("admin/orders");
+    }
 
 }

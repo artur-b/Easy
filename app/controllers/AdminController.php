@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\models\Users as Users;
 use app\models\Orders as Orders;
 
+use app\models\Auth as Auth;
+
 /**
  * Description of AdminController
  *
@@ -19,30 +21,35 @@ class AdminController
     
     public static function dashboard()
     {
-        echo \App::$TWIG->render("adminDashboard.twig");
+        self::checkRole();
+        
+        echo \App::$TWIG->render("admin/dashboard.twig");
     }
 
     public static function users()
     {
+        self::checkRole();
+        
         $users = Users::getAll();
         
         $output['users'] = $users;
-        echo \App::$TWIG->render("adminUserList.twig", $output);
+        echo \App::$TWIG->render("admin/userList.twig", $output);
     }
     
     public static function orders()
     {
+        self::checkRole();
+
         $orders = Orders::getAll();
         
         $output['orders'] = $orders;
-        echo \App::$TWIG->render("admin/OrderList.twig", $output);
-        
+        echo \App::$TWIG->render("admin/orderList.twig", $output);        
     }
     
-    public static function importOrders()
+    public static function checkRole()
     {
-        if (isset($_POST['xls'])) {
-            print_r($_POST['xls']);
+        if (!Auth::isAdmin()) {
+            \App::go("");
         }
     }
 }
