@@ -38,4 +38,11 @@ class AdminController
         echo \App::$TWIG->render("admin/OrderList.twig", $output);
         
     }
+    
+    public static function importOrders()
+    {
+        if (isset($_POST['xls'])) {
+            print_r($_POST['xls']);
+        }
+    }
 }

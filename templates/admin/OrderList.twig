@@ -6,6 +6,12 @@
     <div class="container-fluid content">
 
     <div class="container">
+        <form action="admin/importOrders" method="post">
+            <label class="btn btn-default btn-file">
+                Importuj pliki <input id="xls" name="xls[]" type="file" multiple style="display:none">
+            </label> 
+        </form>
+
         <div class="table-responsive">
             <table class="table table-hover" id="myTable">
                 <tr>
@@ -31,13 +37,7 @@
                 </tr>
                 {% endfor %}
             </table>
-        </div>
-            
-        <form>
-            <label class="btn btn-default btn-file">
-                Importuj pliki <input id="xls" name="xls[]" type="file" multiple style="display:none">
-            </label> 
-       </form>
+        </div>            
     </div><!-- /.container   -->
 
     </div>
