@@ -92,7 +92,6 @@ class OrderController
                 $highestColumn = $sheet->getHighestColumn();
 
                 // Import only one row
-
                 $rowData = $sheet->rangeToArray('A2:' . $highestColumn . '2', null, true, false);
                 $order = [
                     'CustomerName' => $rowData[2] . " " . $rowData[3],
@@ -100,12 +99,15 @@ class OrderController
                     'CustomerPhone' => $rowData[6],
                     'CustomerPesel' => $rowData[4],
                     'CruiseId' => $rowData[1],
-//                      idAmbasadora
-//                      kod
-                ];
+//                  idAmbasadora
+//                  kod
+                ];                
+                
+                // TODO - nadpisywanie tabeli zamówień
+                $id = Orders::create($order);
             }            
         }
-//        \App::go("admin/orders");
+        \App::go("admin/orders");
     }
 
 }
