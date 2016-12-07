@@ -6,21 +6,19 @@ class Db
 {
     private static $_DB = [];
     private static $_CONNECTIONS = [
-            "default" => [
-                DB_NAME => [
-                    "host"     => DB_HOST,
-                    "port"     => DB_PORT,
-                    "username" => DB_USER,
-                    "password" => DB_PASS,
-                    "charset"  => "utf8"
-                ]
-            ]
-        ];
+        DB_NAME => [
+            "host"     => DB_HOST,
+            "port"     => DB_PORT,
+            "username" => DB_USER,
+            "password" => DB_PASS,
+            "charset"  => "utf8"
+        ]
+    ];
 
     public static function Connect($database = DB_NAME)
     {
-        if (!isset(self::$_CONNECTIONS['default'][ $database ])) throw new \Exception("Brak zdefiniowanej bazy danych");
-        else $db = self::$_CONNECTIONS['default'][ $database ];
+        if (!isset(self::$_CONNECTIONS[ $database ])) throw new \Exception("Brak zdefiniowanej bazy danych");
+        else $db = self::$_CONNECTIONS[ $database ];
 
         if (!isset(self::$_DB[ $database ])) {
             try {
@@ -39,7 +37,8 @@ class Db
         return self::$_DB[ $database ];
     }
     
-    public static function sqlValues($separator = false, $array = false, $mergeKeys = false){
+    public static function sqlValues($separator = false, $array = false, $mergeKeys = false)
+    {
         if(!$separator || !$array) return false;
 
         if($mergeKeys){
@@ -53,7 +52,8 @@ class Db
         return $output;
     }
     
-    public static function sqlSet($array = false, $mergeKeys = false){
+    public static function sqlSet($array = false, $mergeKeys = false)
+    {
         if(!$array) return false;
 
         foreach($array as $key => $value){

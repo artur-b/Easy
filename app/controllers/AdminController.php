@@ -35,7 +35,7 @@ class AdminController
         $orders = Orders::getAll();
         
         $output['orders'] = $orders;
-        echo \App::$TWIG->render("adminOrderList.twig", $output);
+        echo \App::$TWIG->render("admin/OrderList.twig", $output);
         
     }
 }

@@ -42,12 +42,12 @@ class Logger
         list($year, $month, $day) = explode(",", date("Y,m,d"));        
         $dir = isset(self::$_logDir) ? self::$_logDir."/$year/$month/$day/" : "/tmp/$year/$month/$day/";
         if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
+            mkdir($dir, 0775, true);
         }
         $file = $dir . self::$_logFileName . date("Y-m-d") . ".log";
         
         file_put_contents($file, $content."\n", FILE_APPEND);
-        chmod($file, 0777);
+        chmod($file, 0775);
     }
 
     static public function trace($msg, $tag = '') {

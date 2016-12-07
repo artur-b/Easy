@@ -13,6 +13,8 @@ class Orders
 
     public static function getAll()
     {
+        $result = [];
+        
         $db = DB::Connect();
         
         $sqlQuery = ' SELECT * FROM Orders ';
@@ -21,7 +23,7 @@ class Orders
             $result[] = $sqlRow;
         }
         
-        return $result;
+        return $result;        
     }
     
     public static function getById($id = null)
@@ -58,7 +60,8 @@ class Orders
     
     // TODO - only One discount per user, check user roles
     
-    public static function create($sqlData = false) {
+    public static function create($sqlData = false)
+    {
         if(empty($sqlData) || !is_array($sqlData)) return 0;
 
         $db = DB::Connect();
@@ -83,7 +86,8 @@ class Orders
         }
     }
 
-    public static function updateById($id = false, $sqlData = false){
+    public static function updateById($id = false, $sqlData = false)
+    {
         if(!$id || !is_numeric($id)) return false;
         if(!$sqlData || !is_array($sqlData)) return false;
 
