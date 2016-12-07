@@ -72,21 +72,39 @@ class OrderController
     
     public static function import()
     {
-    echo "<pre>";
-        print_r($_FILES);
-    echo "</pre>";
         if (isset($_FILES['xls'])) {
-            for ($i=0; $i < count($_FILES['xls']['name']; $i++) {
+            for ($i=0; $i < count($_FILES['xls']['name']); $i++) {
                 // TODO check errors
                 $fileName = $_FILES['xls']['name'][$i];
-                $tmpName = $FILES['xls']['tmp_name'][$i];
+                $tmpName = $_FILES['xls']['tmp_name'][$i];
 
                 echo "Loading $fileName...<br/>";
-                $objReader = \PHPExcel_IOFactory::createReader("Excel2007");
-//                $objPHPEx cel = $objReader->load
+                try {
+                    $objType = \PHPExcel_IOFactory::identify($tmpName);
+                    $objReader = \PHPExcel_IOFactory::createReader($objType);
+                    $objPHPExcel = $objReader->load($tmpName);
+                } catch (Exception $e) {
+                    // TODO show bad import
+                }
+
+                $sheet = $objPHPExcel->getSheet(0); 
+                $highestRow = $sheet->getHighestRow(); 
+                $highestColumn = $sheet->getHighestColumn();
+
+                // Import only one row
+
+                $rowData = $sheet->rangeToArray('A2:' . $highestColumn . '2', null, true, false);
+                $order = [
+                    'CustomerName' => $rowData[2] . " " . $rowData[3],
+                    'CustomerEmail' => $rowData[5],
+                    'CustomerPhone' => $rowData[6],
+                    'CustomerPesel' => $rowData[4],
+                    'CruiseId' => $rowData[1],
+//                      idAmbasadora
+//                      kod
+                ];
             }            
         }
-        exit;
 //        \App::go("admin/orders");
     }
 
