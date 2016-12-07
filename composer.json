@@ -3,6 +3,7 @@
         "twig/twig": "~1.0",
         "phpmailer/phpmailer": "^5.2",
         "ircmaxell/random-lib": "^1.2",
-        "facebook/graph-sdk": "^5.4"
+        "facebook/graph-sdk": "^5.4",
+        "phpoffice/phpexcel": "^1.8"
     }
 }
