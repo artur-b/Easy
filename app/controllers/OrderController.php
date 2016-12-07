@@ -72,15 +72,22 @@ class OrderController
     
     public static function import()
     {
+    echo "<pre>";
         print_r($_FILES);
-        if (isset($_POST['xls'])) {
-            foreach ($_POST['xls'] as $file) {
-                echo "Loading $file...<br/>";
+    echo "</pre>";
+        if (isset($_FILES['xls'])) {
+            for ($i=0; $i < count($_FILES['xls']['name']; $i++) {
+                // TODO check errors
+                $fileName = $_FILES['xls']['name'][$i];
+                $tmpName = $FILES['xls']['tmp_name'][$i];
+
+                echo "Loading $fileName...<br/>";
                 $objReader = \PHPExcel_IOFactory::createReader("Excel2007");
 //                $objPHPEx cel = $objReader->load
             }            
         }
-        \App::go("admin/orders");
+        exit;
+//        \App::go("admin/orders");
     }
 
 }

@@ -49,6 +49,11 @@ class AdminController
     public static function checkRole()
     {
         if (!Auth::isAdmin()) {
+        echo Auth::getId();
+        echo "<hr/>";
+        echo Auth::isAdmin();
+        echo "<hr/>";
+        exit;
             \App::go("");
         }
     }

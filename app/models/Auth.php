@@ -9,6 +9,8 @@ class Auth
     private static $_AUTH   = 0;
     private static $_ADMIN  = false;
     private static $_FB     = null;
+
+    private static $ROLE_ADMIN = 2;
     
     public static function authUser($login = false, $password = false) 
     {
@@ -21,7 +23,7 @@ class Auth
 
             if(self::checkPassword($password, $user['Password'])) {
                 self::$_AUTH = $user['ID'];
-                if ($user['Role'] == 2) {
+                if ($user['Role'] == self::$ROLE_ADMIN) {
                     self::$_ADMIN = true;
                 }
                 self::setId($user['ID']);
@@ -42,7 +44,7 @@ class Auth
             }
 
             self::$_AUTH = $user['ID'];
-            if ($user['Role'] == 2) {
+            if ($user['Role'] == self::$ROLE_ADMIN) {
                 self::$_ADMIN = true;
             }
             self::setId($user['ID']);
@@ -102,6 +104,13 @@ class Auth
     
     public static function isAdmin()
     {
+        if (empty(self::$_ADMIN)) {
+            $authId = (isset($_SESSION['authId']) && $_SESSION['authId'] > 0) ? $_SESSION['authId'] : 0;
+            $user = Users::getById($authId);
+            if (isset($user['Role']) && $user['Role'] == self::$ROLE_ADMIN) {
+                self::$_ADMIN = true;
+            }
+        }
         return self::$_ADMIN;
     }
     
