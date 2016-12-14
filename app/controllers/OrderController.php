@@ -93,12 +93,14 @@ class OrderController
 
                 // Import only one row
                 $rowData = $sheet->rangeToArray('A2:' . $highestColumn . '2', null, true, false);
+                $row = $rowData[0];
+
                 $order = [
-                    'CustomerName' => $rowData[2] . " " . $rowData[3],
-                    'CustomerEmail' => $rowData[5],
-                    'CustomerPhone' => $rowData[6],
-                    'CustomerPesel' => $rowData[4],
-                    'CruiseId' => $rowData[1],
+                    'CustomerName' => $row[2] . " " . $row[3],
+                    'CustomerEmail' => $row[5],
+                    'CustomerPhone' => $row[6],
+                    'CustomerPesel' => $row[4],
+                    'CruiseId' => $row[1],
 //                  idAmbasadora
 //                  kod
                 ];                
