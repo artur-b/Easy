@@ -2,6 +2,8 @@
 
 namespace system\libs;
 
+use system\libs\Db as DB;
+
 class Logger
 {
     public static $LOGLEVEL_ALL = 99;
@@ -121,4 +123,35 @@ class Logger
         }
         return $label;
     }
+    
+    /* TODO userId and Category */
+    public static function dblog($logLevel, $msg) 
+    {
+        $db = DB::Connect();
+        
+        $sqlData = [
+            'Level'     => self::logLevelLabel($logLevel),
+            'Category'  => "system",
+            'Message'   => $msg
+        ];
+
+        $sqlNames  = ' ( ' . DB::sqlValues(", ", $sqlData, true) . ' ) ';
+        $sqlValues = ' ( :' . DB::sqlValues(", :", $sqlData, true) . ' ) ';
+
+        $sqlQuery = ' INSERT INTO Syslog ' . $sqlNames . ' VALUES ' . $sqlValues . ' ';
+
+        $sqlAction = $db->prepare($sqlQuery);
+
+        try {
+            $db->beginTransaction();
+            $sqlAction->execute($sqlData);
+            $db->commit();
+            return true;
+        }
+        catch(\PDOExecption $e) {
+            $db->rollback();
+            return false;
+        }
+    }
+
 }

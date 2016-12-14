@@ -37,6 +37,7 @@ class AuthController
         $_POST['password'] = trim($_POST['password']);
 
         if(Auth::authUser($_POST['login'], $_POST['password'])) {
+            \Logger::dblog(\Logger::$LOGLEVEL_DEBUG, $_POST['login'] . " logged in");
             if (Auth::isAdmin()) {
                 \App::go("admin/dashboard");
             } else {
