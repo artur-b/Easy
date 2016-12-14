@@ -16,6 +16,16 @@ use app\models\Orders as Orders;
  */
 class OrderController 
 {
+    private static $_COLUMNS = [
+        'ID'            => "Lp",
+        'CustomerName'  => "Imię i nazwisko",
+        'CustomerEmail' => "Email",
+        'CustomerPhone' => "Nr telefonu",
+        'CustomerPesel' => "PESEL",
+        'CruiseId'      => "Nr rejsu",
+        'Code'          => "Kod"
+    ];
+    
     public static function start()
     {
         // if $authenticated -> /user/dashboard
@@ -110,6 +120,46 @@ class OrderController
             }            
         }
         \App::go("admin/orders");
+    }
+    
+    public static function export()
+    {
+        if (!Auth::isAdmin()) {
+            return false;
+        }
+        
+        $orders = Orders::getAll();
+        
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->getProperties()->setCreator("BWC");
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        $objPHPExcel->getActiveSheet()->setTitle("BWC export");
+
+        $columns = range("A", "Z");
+        $colIndex = 0;
+        foreach (array_keys(self::$_COLUMNS) as $colKey) {
+            $objPHPExcel->getActiveSheet()->setCellValue($columns[$colIndex++] . "1", self::$_COLUMNS[$colKey]);
+        }
+        
+        for ($i = 0; $i < count($orders); $i++) {
+            $r = $i + 2;
+            $colIndex = 0;
+            foreach (array_keys(self::$_COLUMNS) as $colKey) {
+                $objPHPExcel->getActiveSheet()->setCellValue($columns[$colIndex++] . $r, $orders[$i][$colKey]);
+            }
+        }
+        
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="bwc_export.xlsx"');
+        header('Cache-Control: max-age=0');
+        header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+        header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header ('Pragma: public'); // HTTP/1.0
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+        exit;
+        
     }
 
 }

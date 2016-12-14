@@ -23,9 +23,9 @@
                                 <span class="import-help" style="margin-left: 8px; margin-right: 12px;">
                                     wybierz pliki
                                 </span>
-                                <button class="btn btn-primary btn-sm" type="submit" id="import-submit" disabled><i class="fa fa-upload" aria-hidden="true"></i> Importuj</button>
+                                <button class="btn btn-primary btn-sm" type="submit" id="import-submit" disabled><i class="fa fa-upload" aria-hidden="true"></i> Import</button>
                                 <span style="margin: 0 10px">|</span>
-                                <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-download" aria-hidden="true"></i> Eksport XLS</button>
+                                <button class="btn btn-primary btn-sm" type="button" id="export-orders"><i class="fa fa-download" aria-hidden="true"></i> Eksport</button>
                             </form>
                         </div>
                     </div>
@@ -69,5 +69,6 @@
     {% block pagejs %}
     <script src="{{ APP_URL }}/js/datatables.js"></script>
     <script src="{{ APP_URL }}/js/import.js"></script>
+    <script src="{{ APP_URL }}/js/export.js"></script>
     {% endblock %}
 {% endembed %}
