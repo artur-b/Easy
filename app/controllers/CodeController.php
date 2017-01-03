@@ -24,7 +24,9 @@ class CodeController
     
     public static function share($code = null)
     {
-        echo \App::$TWIG->render("share.twig", $code);
+        $output['code'] = $code;
+        
+        echo \App::$TWIG->render("share.twig", $output);
     }
     
 }
