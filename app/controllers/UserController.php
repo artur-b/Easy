@@ -44,7 +44,7 @@ class UserController
             $helper = $fb->getRedirectLoginHelper();
             $output['fbUrl'] = $helper->getLoginUrl(APP_URL . "/auth/fbCallback", ["public_profile", "email"]);
         } else {
-            $output['fbUrl'] = "http://www.facebook.com/dialog/send?app_id=" . FB_APP_ID . "&link=" . APP_URL . "&redirect_uri=" . APP_URL . "/order/create/" . $key;
+            $output['fbUrl'] = "http://www.facebook.com/dialog/send?app_id=" . FB_APP_ID . "&link=" . APP_URL . "/code/share/" . $key . "&redirect_uri=" . APP_URL . "/order/create/" . $key;
         }
         
         echo \App::$TWIG->render("dashboard.twig", $output);
